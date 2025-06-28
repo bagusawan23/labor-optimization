@@ -24,7 +24,7 @@ def ai_analysis(prompt):
     payload = {
         "model": "mistralai/mistral-7b-instruct:free",
         "messages": [
-            {"role": "system", "content": "You are a helpful data analyst."},
+            {"role": "system", "content": "You are a helpful data analyst and Answer All in Indonesian"},
             {"role": "user", "content": prompt}
         ]
     }
