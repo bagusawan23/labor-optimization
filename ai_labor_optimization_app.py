@@ -161,7 +161,9 @@ def ai_analysis(prompt):
         "messages": [
             {"role": "system", "content": "You are a helpful data analyst and Answer All in Indonesian"},
             {"role": "user", "content": prompt}
-        ]
+        ],
+    "max_tokens": 1000,
+    "temperature": 0.7
     }
     response = requests.post(API_URL, headers=headers, data=json.dumps(payload))
     if response.status_code == 200:
