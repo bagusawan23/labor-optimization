@@ -308,5 +308,13 @@ if uploaded_file:
     st.metric("Total Biaya Optimasi", "Rp {:,.0f}".format(total_optimized))
     st.metric("Total Penghematan", "Rp {:,.0f}".format(total_saving))
 
+    with st.expander("📋 Analisis AI - Ringkasan Total Biaya"):
+        prompt = """Berikut adalah ringkasan total biaya tenaga kerja sebelum dan sesudah optimasi, serta total penghematan. Jelaskan apakah optimasi yang dilakukan sudah efisien, serta rekomendasi kebijakan lanjutan untuk meningkatkan efisiensi biaya lebih lanjut:
+
+        Total Biaya Aktual: Rp {:,.0f}
+        Total Biaya Optimasi: Rp {:,.0f}
+        Total Penghematan: Rp {:,.0f}
+        """.format(total_actual, total_optimized, total_saving)
+        st.markdown(ai_analysis(prompt))
 
 
