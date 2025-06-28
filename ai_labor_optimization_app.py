@@ -133,6 +133,7 @@
 #         st.markdown(ai_analysis(prompt))
 
 
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -266,7 +267,23 @@ if uploaded_file:
         prompt = """Data berikut menunjukkan biaya aktual dan hasil optimasi tenaga kerja. Jelaskan perbandingan grafik secara visual dan berikan masukan strategi penghematan kepada pemangku kepentingan:\n\n{}""".format(jan_data[['date','total_labor_cost','total_optimized_cost','cost_saving']].head(10).to_string(index=False))
         st.markdown(ai_analysis(prompt))
 
+    
+    # --- Optimasi ulang untuk seluruh data ---
+    total_hours = max_hours + overtime_hours
+    total_capacity_per_worker = total_hours * productivity
+    full_cost = data["regular_wage_per_hour"] * max_hours + data["overtime_wage_per_hour"] * overtime_hours
+
+    A_all = -np.eye(len(data)) * total_capacity_per_worker
+    b_all = -data["incoming_orders"].values
+    c_all = full_cost
+
+    result_all = linprog(c_all, A_ub=A_all, b_ub=b_all, bounds=[(0, None)] * len(data), method='highs')
+    data["optimal_workers"] = np.ceil(result_all.x).astype(int)
+    data["total_optimized_cost"] = data["optimal_workers"] * full_cost
+    data["cost_saving"] = data["total_labor_cost"] - data["total_optimized_cost"]
+
     st.subheader("🧾 Ringkasan Total Biaya")
+    
     total_actual = data["total_labor_cost"].sum()
     total_optimized = data["total_optimized_cost"].sum()
     total_saving = data["cost_saving"].sum()
@@ -274,4 +291,5 @@ if uploaded_file:
     st.metric("Total Biaya Aktual", "Rp {:,.0f}".format(total_actual))
     st.metric("Total Biaya Optimasi", "Rp {:,.0f}".format(total_optimized))
     st.metric("Total Penghematan", "Rp {:,.0f}".format(total_saving))
+
 
