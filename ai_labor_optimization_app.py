@@ -59,9 +59,7 @@ if uploaded_file:
     st.pyplot(fig1)
 
     with st.expander("📋 Analisis AI - Beban Kerja vs Kapasitas Reguler"):
-        prompt = f"Berikut adalah data jumlah order harian dan kapasitas kerja reguler yang tersedia. Buatlah penjelasan grafik secara visual, tren yang terlihat, serta rekomendasi kebijakan atau solusi yang dapat diambil oleh pemangku kepentingan untuk meningkatkan efisiensi tenaga kerja:
-
-\n\n{data[['date','incoming_orders','regular_capacity']].head(20).to_string(index=False)}"
+        prompt = f"Berikan insight dari data beban kerja harian dan kapasitas reguler berikut:\n\n{data[['date','incoming_orders','regular_capacity']].head(20).to_string(index=False)}"
         st.markdown(ai_analysis(prompt))
 
     data["month"] = data["date"].dt.to_period("M")
@@ -77,9 +75,7 @@ if uploaded_file:
     st.pyplot(fig2)
 
     with st.expander("📋 Analisis AI - Rasio Biaya Lembur"):
-        prompt = f"Grafik berikut menunjukkan rasio biaya lembur terhadap total biaya tenaga kerja per bulan. Tolong jelaskan tren secara visual dan berikan rekomendasi kebijakan kepada manajemen jika tren lembur semakin tinggi:
-
-\n\n{monthly[['overtime_ratio']].tail(12).to_string()}"
+        prompt = f"Berikan analisis dan rekomendasi dari tren rasio lembur berikut:\n\n{monthly[['overtime_ratio']].tail(12).to_string()}"
         st.markdown(ai_analysis(prompt))
 
     st.subheader("🚨 Hari-hari Kritis dengan Lembur > 40 Jam")
@@ -92,9 +88,7 @@ if uploaded_file:
     st.pyplot(fig3)
 
     with st.expander("📋 Analisis AI - Hari Kritis"):
-        prompt = f"Berikut adalah data hari-hari di mana jumlah jam lembur melebihi 40 jam. Berikan analisis dari pola ini dan rekomendasikan langkah strategis yang bisa diambil perusahaan:
-
-\n\n{critical[['date','overtime_hours']].head(10).to_string(index=False)}"
+        prompt = f"Berikan interpretasi dari hari-hari dengan jam lembur di atas 40:\n\n{critical[['date','overtime_hours']].head(10).to_string(index=False)}"
         st.markdown(ai_analysis(prompt))
 
     jan_data = data[data["date"].dt.month == 1].copy().reset_index(drop=True)
@@ -135,18 +129,5 @@ if uploaded_file:
     st.pyplot(fig6)
 
     with st.expander("📋 Analisis AI - Efisiensi Biaya"):
-        prompt = f"Data berikut menunjukkan biaya aktual dan hasil optimasi tenaga kerja. Jelaskan perbandingan grafik secara visual dan berikan masukan strategi penghematan kepada pemangku kepentingan:
-
-\n\n{jan_data[['date','total_labor_cost','total_optimized_cost','cost_saving']].head(10).to_string(index=False)}"
+        prompt = f"Berikan insight dari data efisiensi biaya berikut:\n\n{jan_data[['date','total_labor_cost','total_optimized_cost','cost_saving']].head(10).to_string(index=False)}"
         st.markdown(ai_analysis(prompt))
-
-
-    # --- Ringkasan Biaya Total ---
-    st.subheader("🧾 Ringkasan Total Biaya")
-    total_actual = data["total_labor_cost"].sum()
-    total_optimized = data["total_optimized_cost"].sum()
-    total_saving = data["cost_saving"].sum()
-
-    st.metric("Total Biaya Aktual", f"Rp {total_actual:,.0f}")
-    st.metric("Total Biaya Optimasi", f"Rp {total_optimized:,.0f}")
-    st.metric("Total Penghematan", f"Rp {total_saving:,.0f}")
