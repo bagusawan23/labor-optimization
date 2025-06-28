@@ -22,7 +22,7 @@ def ai_analysis(prompt):
         "Content-Type": "application/json"
     }
     payload = {
-        "model": "openai/gpt-4",
+        "model": "mistralai/mistral-7b-instruct:free",
         "messages": [
             {"role": "system", "content": "You are a helpful data analyst."},
             {"role": "user", "content": prompt}
