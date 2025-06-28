@@ -150,7 +150,7 @@ st.title("📊 Dashboard Analisis Biaya Tenaga Kerja & Optimasi")
 # --- Fungsi Analisis AI ---
 def ai_analysis(prompt):
     API_URL = "https://openrouter.ai/api/v1/chat/completions"
-    API_KEY = st.secrets["openrouter_api_key"]
+    API_KEY = st.secrets["openai_api_key"]
 
     headers = {
         "Authorization": "Bearer {}".format(API_KEY),
@@ -161,9 +161,7 @@ def ai_analysis(prompt):
         "messages": [
             {"role": "system", "content": "You are a helpful data analyst and Answer All in Indonesian"},
             {"role": "user", "content": prompt}
-        ],
-    "max_tokens": 1000,
-    "temperature": 0.7
+        ]
     }
     response = requests.post(API_URL, headers=headers, data=json.dumps(payload))
     if response.status_code == 200:
