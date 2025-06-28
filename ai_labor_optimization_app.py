@@ -134,6 +134,7 @@
 
 
 
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -149,7 +150,7 @@ st.title("📊 Dashboard Analisis Biaya Tenaga Kerja & Optimasi")
 
 # --- Fungsi Analisis AI ---
 def ai_analysis(prompt):
-    API_URL = "https://openrouter.ai/api/v1/chat/completions"
+    API_URL = "https://api.openai.com/v1/chat/completions"
     API_KEY = st.secrets["openai_api_key"]
 
     headers = {
@@ -168,6 +169,21 @@ def ai_analysis(prompt):
         return response.json()['choices'][0]['message']['content']
     else:
         return "⚠️ Gagal mengambil insight AI (kode: {})".format(response.status_code)
+
+import streamlit as st
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import requests
+import json
+from scipy.optimize import linprog
+
+# --- Konfigurasi Streamlit ---
+st.set_page_config(page_title="📊 Optimasi Tenaga Kerja & Analisis AI", layout="wide")
+st.title("📊 Dashboard Analisis Biaya Tenaga Kerja & Optimasi")
+
+# --- Fungsi Analisis AI ---
 
 # --- Upload File Excel ---
 uploaded_file = st.file_uploader("📤 Upload file Excel simulasi tenaga kerja", type=["xlsx"])
@@ -291,5 +307,6 @@ if uploaded_file:
     st.metric("Total Biaya Aktual", "Rp {:,.0f}".format(total_actual))
     st.metric("Total Biaya Optimasi", "Rp {:,.0f}".format(total_optimized))
     st.metric("Total Penghematan", "Rp {:,.0f}".format(total_saving))
+
 
 
