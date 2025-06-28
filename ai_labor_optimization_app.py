@@ -146,7 +146,7 @@ from scipy.optimize import linprog
 
 # --- Konfigurasi Streamlit ---
 st.set_page_config(page_title="📊 Optimasi Tenaga Kerja & Analisis AI", layout="wide")
-st.title("📊 Dashboard Analisis Biaya Tenaga Kerja & Optimasi")
+
 
 # --- Fungsi Analisis AI ---
 def ai_analysis(prompt):
