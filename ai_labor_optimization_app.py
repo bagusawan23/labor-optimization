@@ -182,6 +182,7 @@ from scipy.optimize import linprog
 # --- Konfigurasi Streamlit ---
 st.set_page_config(page_title="📊 Optimasi Tenaga Kerja & Analisis AI", layout="wide")
 st.title("📊 Dashboard Analisis Biaya Tenaga Kerja & Optimasi")
+st.markdown("Unggah data tenaga kerja (CSV/XLSX). \n📎 File simulasi dapat diunduh di sini: https://docs.google.com/spreadsheets/d/1wGpoGUqsJ_01z5nS_mbdXSFHuMygQxYg/edit?usp=sharing&ouid=115356310150317657781&rtpof=true&sd=true")
 
 # --- Fungsi Analisis AI ---
 
